@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="select_placeholder">Seleccionar placeholder</string>
+    <string name="put_url">Ingresa la url</string>
+    <string name="put_name">Ingresa un nombre</string>
+    <string name="select_colors">Seleccionar colores</string>
+    <string name="background_color">Color de fondo</string>
+    <string name="text_color">Color de texto</string>
+</resources>

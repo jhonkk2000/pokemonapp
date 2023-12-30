@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/profile_pic_nav">
+
+    <fragment
+        android:id="@+id/profile_pic_nav"
+        android:name="com.jhonkk.profilepic.view.ProfilePicFragment"
+        class="com.jhonkk.profilepic.view.ProfilePicFragment"
+        android:label="ProfilePic" />
+
+    <fragment
+        android:id="@+id/pokemon_nav"
+        android:name="com.jhonkk.profilepic.view.ProfilePicFragment"
+        class="com.jhonkk.profilepic.view.ProfilePicFragment"
+        android:label="Pokemon" />
+
+    <fragment
+        android:id="@+id/my_locations_nav"
+        android:name="com.jhonkk.profilepic.view.ProfilePicFragment"
+        class="com.jhonkk.profilepic.view.ProfilePicFragment"
+        android:label="MyLocation" />
+
+</navigation>
