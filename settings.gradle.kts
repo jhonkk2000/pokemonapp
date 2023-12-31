@@ -20,3 +20,7 @@ rootProject.name = "PokemonApp"
 include(":app")
 include(":feature:profilepic")
 include(":core:common")
+include(":core:network")
+include(":feature:pokemon")
+include(":core:data")
+include(":core:domain")

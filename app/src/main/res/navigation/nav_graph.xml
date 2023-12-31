@@ -13,8 +13,8 @@
 
     <fragment
         android:id="@+id/pokemon_nav"
-        android:name="com.jhonkk.profilepic.view.ProfilePicFragment"
-        class="com.jhonkk.profilepic.view.ProfilePicFragment"
+        android:name="com.jhonkk.pokemon.PokemonFragment"
+        class="com.jhonkk.pokemon.PokemonFragment"
         android:label="Pokemon" />
 
     <fragment
