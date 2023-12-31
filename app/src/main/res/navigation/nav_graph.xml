@@ -8,19 +8,16 @@
     <fragment
         android:id="@+id/profile_pic_nav"
         android:name="com.jhonkk.profilepic.view.ProfilePicFragment"
-        class="com.jhonkk.profilepic.view.ProfilePicFragment"
         android:label="ProfilePic" />
 
     <fragment
         android:id="@+id/pokemon_nav"
         android:name="com.jhonkk.pokemon.PokemonFragment"
-        class="com.jhonkk.pokemon.PokemonFragment"
         android:label="Pokemon" />
 
     <fragment
         android:id="@+id/my_locations_nav"
-        android:name="com.jhonkk.profilepic.view.ProfilePicFragment"
-        class="com.jhonkk.profilepic.view.ProfilePicFragment"
+        android:name="com.jhonkk.mylocations.MyLocationsFragment"
         android:label="MyLocation" />
 
 </navigation>

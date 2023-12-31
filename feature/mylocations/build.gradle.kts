@@ -3,10 +3,12 @@ plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
     kotlin("kapt")
+    id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
-    namespace = "com.jhonkk.data"
+    namespace = "com.jhonkk.mylocations"
     compileSdk = 33
 
     defaultConfig {
@@ -32,6 +34,9 @@ android {
     kotlinOptions {
         jvmTarget = "17"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -39,24 +44,26 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.android.material)
-    implementation(project(mapOf("path" to ":core:common")))
+    implementation(libs.androidx.fragment)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espresso)
 
-    implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-
-    implementation(libs.squareup.retrofit2)
-    implementation(libs.squareup.retrofit2.gson)
-
-    implementation(libs.androidx.room.runtime)
-    annotationProcessor(libs.androidx.room.compiler)
-    implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+    implementation(libs.google.maps.android.utils)
+    implementation(libs.google.android.gms)
+    implementation(libs.google.android.play)
 
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.firestore)
+    implementation(libs.google.android.gms.play.services.location)
 
-    implementation(project(":core:network"))
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+
+    implementation(libs.work.runtime.ktx)
+    implementation(libs.androidx.hilt.work)
+    implementation(libs.androidx.startup.runtime)
+
+    implementation(project(":core:data"))
+    implementation(project(":core:common"))
 }

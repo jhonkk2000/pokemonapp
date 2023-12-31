@@ -1,5 +1,8 @@
 package com.jhonkk.network.di
 
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.google.gson.internal.GsonBuildConfig
 import com.jhonkk.network.BuildConfig
 import com.jhonkk.network.api.PokemonApi
@@ -45,5 +48,9 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideApi(retrofit: Retrofit): PokemonApi = retrofit.create()
+
+    @Provides
+    @Singleton
+    fun provideFirestore(): FirebaseFirestore = Firebase.firestore
 
 }

@@ -3,6 +3,8 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -20,6 +22,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+        manifestPlaceholders["MAPS_API_KEY"] = "${properties["MAPS_API_KEY"]}"
     }
 
     buildTypes {
@@ -67,8 +70,12 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+
     implementation(project(":feature:profilepic"))
     implementation(project(":feature:pokemon"))
+    implementation(project(":feature:mylocations"))
+    implementation(project(":core:data"))
 
 //    room()
 //    hilt()

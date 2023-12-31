@@ -27,4 +27,8 @@ object DatabaseModule {
     @Singleton
     fun providePokemonDao(database: AppDatabase) = database.pokemonDao()
 
+    @Provides
+    @Singleton
+    fun provideLocationDao(database: AppDatabase) = database.locationDao()
+
 }
