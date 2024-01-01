@@ -18,7 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.jhonkk.pokemonapp.CustomTestRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -63,19 +63,26 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    testImplementation(libs.hilt.android.testing)
+    kaptTest(libs.hilt.compiler)
+    kaptAndroidTest(libs.hilt.compiler)
+    debugImplementation(libs.androidx.fragment.testing)
     testImplementation(libs.junit)
+    debugImplementation(libs.hilt.android.testing)
+    debugImplementation(libs.androidx.core.testing)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espresso)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation(libs.androidx.work.runtime.ktx)
 
     implementation(project(":feature:profilepic"))
     implementation(project(":feature:pokemon"))
     implementation(project(":feature:mylocations"))
     implementation(project(":core:data"))
+    implementation(project(":core:common"))
 
 //    room()
 //    hilt()

@@ -1,4 +1,4 @@
-package com.jhonkk.profilepic.view
+package com.jhonkk.profilepic
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -17,8 +17,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.jhonkk.common.view.ProfilePicView
-import com.jhonkk.profilepic.PlaceholderOptionsFragment
 import com.jhonkk.profilepic.databinding.FragmentProfilePicBinding
+import com.jhonkk.profilepic.view.PlaceholderOptionsFragment
+import com.jhonkk.profilepic.view.TextOptionsFragment
 import com.jhonkk.profilepic.viewmodel.ImageUiState
 import com.jhonkk.profilepic.viewmodel.ProfilePicViewModel
 import dagger.hilt.android.AndroidEntryPoint

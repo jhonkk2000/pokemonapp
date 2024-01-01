@@ -51,7 +51,7 @@ class PokemonViewModel @Inject constructor(
             currentPage++
             _pokemonUiState.update { it.copy(isLoadingMore = true) }
             //Delay for improve experience without connection
-            delay(1200)
+//            delay(1200)
             getPokemonsUseCase.invoke(currentPage).catch {
                 _pokemonUiState.update { it.copy(isLoadingMore = false) }
             }.collect { list ->
@@ -81,7 +81,7 @@ class PokemonViewModel @Inject constructor(
         }
     }
 
-    val coroutineExceptionHandler = CoroutineExceptionHandler{_, throwable ->
+    private val coroutineExceptionHandler = CoroutineExceptionHandler{ _, throwable ->
         throwable.printStackTrace()
     }
 

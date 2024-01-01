@@ -41,6 +41,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.android.material)
     testImplementation(libs.junit)
+    testImplementation(libs.io.mockk)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espresso)
 

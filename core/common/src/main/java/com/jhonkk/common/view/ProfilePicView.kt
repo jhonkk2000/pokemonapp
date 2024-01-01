@@ -65,6 +65,7 @@ class ProfilePicView: RelativeLayout {
 
     private var placeholder = R.drawable.ic_placeholder
     fun setPlaceholder(placeholder: Int) {
+        status = ProfilePicStatus.PLACEHOLDER
         this.placeholder = placeholder
     }
 
@@ -75,6 +76,7 @@ class ProfilePicView: RelativeLayout {
     }
 
     fun setupWithBitmap(bitmap: Bitmap) {
+        status = ProfilePicStatus.IMAGE
         imageView?.visible()
         textView?.gone()
         imageView?.setImageBitmap(bitmap)
@@ -83,6 +85,7 @@ class ProfilePicView: RelativeLayout {
     }
 
     fun setupWithText(text: String) {
+        status = ProfilePicStatus.TEXT
         textView?.visible()
         imageView?.gone()
         val split = text.split(" ")

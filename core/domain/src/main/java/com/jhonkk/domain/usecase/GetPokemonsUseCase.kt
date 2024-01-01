@@ -18,38 +18,36 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 const val POKEMONS_LIMIT = 25
 
 class GetPokemonsUseCase @Inject constructor(private val pokemonRepository: PokemonRepository) {
 
-    val exceptionHandler = CoroutineExceptionHandler{_ , throwable->
-        throwable.printStackTrace()
-    }
-
     operator fun invoke(page: Int): Flow<List<Pokemon>> {
         val totalPokemons = (page + 1) * POKEMONS_LIMIT
-        CoroutineScope(Dispatchers.IO + exceptionHandler).launch {
-            pokemonRepository.getPokemonsFlow(page)
-                .collect { response ->
-                    if (response.isSuccessful) {
-                        val list = response.body()?.results
-                        list?.let {
-                            pokemonRepository.insertPokemon(it.map { pokemon ->
-                                pokemon.toFinalPokemon().toPokemonE()
-                            })
+        runBlocking {
+            launch {
+                pokemonRepository.getPokemonsFlow(page)
+                    .collect { response ->
+                        if (response.isSuccessful) {
+                            val list = response.body()?.results
+                            list?.let {
+                                pokemonRepository.insertPokemon(it.map { pokemon ->
+                                    pokemon.toFinalPokemon().toPokemonE()
+                                })
+                            }
+                        } else {
+                            throw Throwable("Error al cargar pokemons")
                         }
-                    } else {
-                        throw Throwable("Error al cargar pokemons")
                     }
-                }
+            }
         }
         val localFlow = pokemonRepository.getLocalPokemons(limit = totalPokemons)
             .map {
                 it.map { pokemonE -> pokemonE.toPokemon() }
             }
-
         return localFlow
     }
 

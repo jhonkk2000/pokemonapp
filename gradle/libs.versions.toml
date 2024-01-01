@@ -1,5 +1,8 @@
 [versions]
+androidx-workRuntimeKtx = "2.9.0"
+coreTesting = "2.2.0"
 hilt = "2.49"
+hiltAndroidTesting = "2.48.1"
 hiltWork = "1.2.0-alpha01"
 kotlin = "1.12.0"
 androidXAppCompat = "1.6.1"
@@ -11,6 +14,8 @@ androidXTestEspresso = "3.5.1"
 androidXLifecycleExt = "2.2.0"
 glide = "4.16.0"
 colorPicker = "2.3"
+kotlinxCoroutinesAndroid = "1.6.1"
+kotlinxCoroutinesTest = "1.6.1"
 lifecycleRuntimeKtx = "2.6.2"
 navigationFragmentKtx = "2.7.6"
 retrofit = "2.9.0"
@@ -25,16 +30,21 @@ startupRuntime = "1.1.1"
 workRuntimeKtx = "1.0.0"
 firebaseBom = "32.7.0"
 servicesLocation = "21.0.1"
+mockk = "1.13.8"
 
 [libraries]
+androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
+androidx-fragment-testing = { module = "androidx.fragment:fragment-testing", version.ref = "androidXFragment" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltWork" }
 androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltWork" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragmentKtx" }
 androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startupRuntime" }
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "androidx-workRuntimeKtx" }
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-android-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroidTesting" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "kotlin" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidXAppCompat" }
@@ -53,6 +63,8 @@ color-picker = { group = "com.github.Dhaval2404", name = "ColorPicker", version.
 google-maps-android-utils = { group = "com.google.maps.android", name = "android-maps-utils", version.ref = "maps" }
 google-android-gms = { group = "com.google.android.gms", name = "play-services-maps", version.ref = "playServicesMaps" }
 google-android-play = { group = "com.google.android.play", name = "core", version.ref = "playCore" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 squareup-retrofit2 = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 squareup-retrofit2-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 squareup-okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
@@ -60,6 +72,7 @@ work-runtime-ktx = { module = "android.arch.work:work-runtime-ktx", version.ref 
 google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 google-firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore" }
 google-android-gms-play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "servicesLocation" }
+io-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 
 
 [plugins]

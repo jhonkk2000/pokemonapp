@@ -1,4 +1,4 @@
-package com.jhonkk.profilepic
+package com.jhonkk.profilepic.view
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.jhonkk.profilepic.R
 import com.jhonkk.profilepic.databinding.FragmentPlaceholderOptionsBinding
 import com.jhonkk.profilepic.viewmodel.ProfilePicViewModel
 

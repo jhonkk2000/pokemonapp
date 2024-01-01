@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/profile_pic_nav"
-        android:name="com.jhonkk.profilepic.view.ProfilePicFragment"
+        android:name="com.jhonkk.profilepic.ProfilePicFragment"
         android:label="ProfilePic" />
 
     <fragment

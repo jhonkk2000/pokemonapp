@@ -9,10 +9,8 @@ import javax.inject.Inject
 
 class UpdateBookmarkUseCase @Inject constructor(private val pokemonRepository: PokemonRepository) {
 
-    operator fun invoke(id: Int, bookmarked: Boolean) {
-        CoroutineScope(Dispatchers.IO).launch {
-            pokemonRepository.updateBookmarked(id, bookmarked)
-        }
+    suspend operator fun invoke(id: Int, bookmarked: Boolean) {
+        pokemonRepository.updateBookmarked(id, bookmarked)
     }
 
 }
