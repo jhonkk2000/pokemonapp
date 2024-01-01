@@ -27,6 +27,7 @@ class PokemonDetailDialog : DialogFragment() {
     var pdi: PokemonDetailInterface? = null
     interface PokemonDetailInterface {
         fun onBookmark(id: Int, bookmarked: Boolean)
+        fun onDismiss()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +43,9 @@ class PokemonDetailDialog : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        dialog?.setOnDismissListener {
+            pdi?.onDismiss()
+        }
         pokemon?.let {
             binding.btnBookmark.setOnClickListener { _ ->
                 it.id?.let { idPokemon ->
@@ -53,7 +57,10 @@ class PokemonDetailDialog : DialogFragment() {
             bindBookmark(it.bookmarked)
             binding.toolbar.title = it.name.uppercase()
             binding.tvId.text = "#${it.id}"
-            binding.toolbar.setNavigationOnClickListener { dismiss() }
+            binding.toolbar.setNavigationOnClickListener {
+                pdi?.onDismiss()
+                dismiss()
+            }
             binding.tvHeight.text = "Altura: ${it.height}"
             binding.tvWeight.text = "Peso: ${it.weight}"
             val adapter = PokemonTypeAdapter(it.types)

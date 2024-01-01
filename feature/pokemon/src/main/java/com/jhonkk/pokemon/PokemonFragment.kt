@@ -1,5 +1,6 @@
 package com.jhonkk.pokemon
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,8 +19,10 @@ import com.jhonkk.domain.model.Pokemon
 import com.jhonkk.pokemon.adapter.PokemonAdapter
 import com.jhonkk.pokemon.databinding.FragmentPokemonBinding
 import com.jhonkk.pokemon.dialog.PokemonDetailDialog
+import com.jhonkk.pokemon.viewmodel.PokemonState
 import com.jhonkk.pokemon.viewmodel.PokemonViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -45,32 +48,46 @@ class PokemonFragment: Fragment() {
         initRecycler()
 
         lifecycleScope.launch {
-            viewModel.pokemonUiState
-                .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                .collect { state ->
-                    if (state.isLoadingMore) binding.linearProgress.visible() else binding.linearProgress.gone()
-                    adapter.submitList(state.list)
-                }
+            launch {
+                viewModel.pokemonUiState
+                    .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                    .collect { state ->
+                        if (state.isLoadingMore) binding.linearProgress.visible() else binding.linearProgress.gone()
+                        adapter.submitList(state.list)
+                    }
+            }
+            launch {
+                viewModel.pokemonState
+                    .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
+                    .collect { state ->
+                        when (state) {
+                            is PokemonState.OpenDialog -> openDialog(pokemon = state.pokemon)
+                            else -> {}
+                        }
+                    }
+            }
         }
-        if (viewModel.currentPage == -1) viewModel.getPokemons(onClickPokemon)
+        if (viewModel.currentPage == -1) viewModel.getPokemons()
         setupMoreData()
 
         return binding.root
     }
 
-    private val onClickPokemon = { pokemon: Pokemon ->
-        childFragmentManager.executePendingTransactions()
-        if (isAdded) {
-            val dialog = PokemonDetailDialog.newInstance(pokemon)
-            dialog.pdi = object : PokemonDetailDialog.PokemonDetailInterface {
-                override fun onBookmark(id: Int, bookmarked: Boolean) {
-                    adapter.submitList(null)
-                    viewModel.updateBookmarked(id, bookmarked)
-                }
+    private fun openDialog(pokemon: Pokemon) {
+        val dialog = PokemonDetailDialog.newInstance(pokemon)
+        dialog.pdi = object : PokemonDetailDialog.PokemonDetailInterface {
+            override fun onBookmark(id: Int, bookmarked: Boolean) {
+                adapter.submitList(null)
+                viewModel.updateBookmarked(id, bookmarked)
             }
-            dialog.show(childFragmentManager, "POKEMON_DETAIL")
+
+            override fun onDismiss() {
+                viewModel.clearState()
+            }
         }
+        dialog.show(childFragmentManager, "POKEMON_DETAIL")
     }
+
 
     private fun setupMoreData() {
         binding.rvPokemons.addOnScrollListener(object : OnScrollListener() {
@@ -81,7 +98,7 @@ class PokemonFragment: Fragment() {
                     if (it.findLastVisibleItemPosition() == adapter.itemCount - 1
                         && !viewModel.pokemonUiState.value.isLoadingMore) {
                         //loadMore
-                        viewModel.getPokemons(onClickPokemon)
+                        viewModel.getPokemons()
                     }
                 }
             }

@@ -12,9 +12,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.update
@@ -28,6 +32,12 @@ class PokemonViewModel @Inject constructor(
     private val updateBookmarkUseCase: UpdateBookmarkUseCase
 ) : ViewModel() {
 
+    private val _pokemonState: MutableSharedFlow<PokemonState> = MutableSharedFlow(
+        replay = 1,
+        onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+    val pokemonState: SharedFlow<PokemonState> = _pokemonState.asSharedFlow()
+
     private val _pokemonUiState: MutableStateFlow<PokemonUiState> =
         MutableStateFlow(PokemonUiState())
     val pokemonUiState: StateFlow<PokemonUiState> = _pokemonUiState.asStateFlow()
@@ -35,13 +45,13 @@ class PokemonViewModel @Inject constructor(
     var currentPage = -1
 
     private var jobPokemons: Job? = null
-    fun getPokemons(onClickPokemon: (Pokemon) -> Unit) {
+    fun getPokemons() {
         jobPokemons?.cancel()
         jobPokemons = viewModelScope.launch(Dispatchers.IO) {
             currentPage++
             _pokemonUiState.update { it.copy(isLoadingMore = true) }
-            //Delay for improve experence without connection
-            delay(1500)
+            //Delay for improve experience without connection
+            delay(1200)
             getPokemonsUseCase.invoke(currentPage).catch {
                 _pokemonUiState.update { it.copy(isLoadingMore = false) }
             }.collect { list ->
@@ -50,7 +60,7 @@ class PokemonViewModel @Inject constructor(
                         PokemonItemState(
                             pokemon = item,
                             statusData = if (item.isLoadedData) StatusDataPokemon.LOADED else StatusDataPokemon.LOADING,
-                            onClick = { onClickPokemon(item) },
+                            onClick = { _pokemonState.tryEmit(PokemonState.OpenDialog(item)) },
                             onBookmark = { bookmarked ->
                                 item.id?.let { updateBookmarked(it, bookmarked) }
                             },
@@ -58,12 +68,12 @@ class PokemonViewModel @Inject constructor(
                     }
                     state.copy(list = newList, isLoadingMore = newList.isEmpty())
                 }
-                loadFullDataPokemon(list, onClickPokemon)
+                loadFullDataPokemon(list)
             }
         }
     }
 
-    private fun loadFullDataPokemon(list: List<Pokemon>, onClickPokemon: (Pokemon) -> Unit) {
+    private fun loadFullDataPokemon(list: List<Pokemon>) {
         list.forEach { pokemon ->
             if (!pokemon.isLoadedData) {
                 getPokemon(pokemon)
@@ -87,9 +97,20 @@ class PokemonViewModel @Inject constructor(
         }
     }
 
+    fun clearState() {
+        viewModelScope.launch {
+            _pokemonState.tryEmit(PokemonState.Init)
+        }
+    }
+
 }
 
 data class PokemonUiState(
     val list: List<PokemonItemState> = listOf(),
     val isLoadingMore: Boolean = false
 )
+
+sealed class PokemonState {
+    object Init: PokemonState()
+    data class OpenDialog(val pokemon: Pokemon): PokemonState()
+}
