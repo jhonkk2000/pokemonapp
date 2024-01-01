@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "258402259741",
+    "project_id": "pruebapokemon-3023d",
+    "storage_bucket": "pruebapokemon-3023d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:258402259741:android:b2a8a71a7bcf65b9d9c7f4",
+        "android_client_info": {
+          "package_name": "com.jhonkk.pokemonapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdCVfMymhPscvhmCvUnfiYlNCf1rZwJxY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
