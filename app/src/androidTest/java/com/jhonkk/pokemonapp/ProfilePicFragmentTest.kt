@@ -78,6 +78,10 @@ inline fun <reified T : Fragment> launchFragmentInHiltContainer(
 
 }
 
+fun waitUntilChange(timeout: Long, status: ProfilePicStatus): ViewAction {
+    return WaitUntilChangeStatePic(timeout, status)
+}
+
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltAndroidTest
 class ProfilePicFragmentTest {
@@ -117,8 +121,9 @@ class ProfilePicFragmentTest {
 
         }
         onView(ViewMatchers.withId(R.id.et_name)).perform(ViewActions.typeText(""))
-        onView(ViewMatchers.withId(R.id.et_url)).perform(ViewActions.typeText("https://img.favpng.com/14/0/3/standard-test-image-acceptance-testing-png-favpng-Yy97FH3TSHfV906y3fKtRFFzL.jpg"))
+        onView(ViewMatchers.withId(R.id.et_url)).perform(ViewActions.replaceText("https://firebasestorage.googleapis.com/v0/b/animeapp2test.appspot.com/o/img_profile%2Fspy_x_family%2Fplaceholder.webp?alt=media&token=81ff248c-cb4b-457d-a73d-2d14f533ca89"))
         closeSoftKeyboard()
+        onView(ViewMatchers.withId(R.id.profile_pic_view)).perform(waitUntilChange(3000L, ProfilePicStatus.IMAGE))
         onView(ViewMatchers.withId(R.id.profile_pic_view)).check(ViewAssertions.matches(object : TypeSafeMatcher<View>() {
             override fun describeTo(description: Description?) {
             }
