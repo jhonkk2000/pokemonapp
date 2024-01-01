@@ -12,6 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flattenMerge
 import kotlinx.coroutines.flow.flow
@@ -30,6 +31,7 @@ class GetPokemonsUseCase @Inject constructor(private val pokemonRepository: Poke
         runBlocking {
             launch {
                 pokemonRepository.getPokemonsFlow(page)
+                    .catch {  }
                     .collect { response ->
                         if (response.isSuccessful) {
                             val list = response.body()?.results
